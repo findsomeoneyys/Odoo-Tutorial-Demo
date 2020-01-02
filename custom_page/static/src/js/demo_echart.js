@@ -12,6 +12,7 @@ odoo.define('custom_page.echart', function (require) {
         ],
         // 需要额外引入的js文件
         jsLibs: [
+            'https://cdn.jsdelivr.net/npm/echarts@4.6.0/dist/echarts.min.js'
         ],
         // 事件绑定相关定义
         events: {
@@ -20,6 +21,24 @@ odoo.define('custom_page.echart', function (require) {
         init: function(parent, context) {
             this._super(parent, context);
             console.log("in action init!");
+            this.echart_option = {
+                title: {
+                    text: 'ECharts 入门示例'
+                },
+                tooltip: {},
+                legend: {
+                    data:['销量']
+                },
+                xAxis: {
+                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }]
+            };
         },
         // willStart是执行介于init和start中间的一个异步方法，一般会执行向后台请求数据的请求，并储存返回来的数据。
         // 其中ajax.loadLibs(this)会帮加载定义在cssLibs，jsLibs的js组件。
@@ -35,7 +54,14 @@ odoo.define('custom_page.echart', function (require) {
             var self = this;
             return this._super().then(function() {
                 console.log("in action start!");
+                self.render_chart();
             });
+        },
+        render_chart: function() {
+            var el = this.$el.find('#app')[0];
+            this.myChart = echarts.init(el);
+            this.myChart.setOption(this.echart_option);
+
         },
     });
     

@@ -3,7 +3,7 @@
 
     <t t-name="EchartPage">
         <div class="container-fluid mt-3">
-            <div id="app" class="mt-2">
+            <div id="app" class="mt-2" style="width: 800px;height:500px;">
                 <p>echart</p>
             </div>
         </div>
