@@ -66,7 +66,17 @@ odoo.define('custom_page.echart', function (require) {
         },
         on_btn1_click: function(event) {
             console.log('on_btn1_click!');
-            $(event.target).toggleClass('disabled');
+            var self = this;
+            return this._rpc({
+                route: '/custom_page/data/',
+                params: {},
+            }).done(function(result) {
+                console.log(result);
+                var data = result;
+                self.echart_option.xAxis.data = data['x_data'];
+                self.echart_option.series[0].data = data['y_data'];
+                self.myChart.setOption(self.echart_option, true);
+            });
         },
     });
     
