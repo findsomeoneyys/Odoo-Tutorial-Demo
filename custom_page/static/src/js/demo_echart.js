@@ -16,6 +16,7 @@ odoo.define('custom_page.echart', function (require) {
         ],
         // 事件绑定相关定义
         events: {
+            'click #btn1': 'on_btn1_click',
         },
         // action的构造器，可以自行根据需求填入需要初始化的数据，比如获取context里的参数，根据条件判断初始化一些变量。
         init: function(parent, context) {
@@ -62,6 +63,10 @@ odoo.define('custom_page.echart', function (require) {
             this.myChart = echarts.init(el);
             this.myChart.setOption(this.echart_option);
 
+        },
+        on_btn1_click: function(event) {
+            console.log('on_btn1_click!');
+            $(event.target).toggleClass('disabled');
         },
     });
     
