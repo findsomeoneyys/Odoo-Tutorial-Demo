@@ -8,8 +8,27 @@
         <menuitem
                 id="menu_root_custom_page"
                 name="Custom Page"
+                groups="base.group_user"/>
+
+        <menuitem
+                id="menu_custom_page_wired"
+                name="Custom Page Wired"
                 action="action_custom_page"
+                parent="menu_root_custom_page"
                 groups="base.group_user"
                 sequence="1"/>
+
+        <record id="action_custom_page_echart" model="ir.actions.client">
+            <field name="name">Custom Page echart</field>
+            <field name="tag">custom_page.echart</field>
+        </record>
+
+        <menuitem
+                id="menu_custom_page_echart"
+                name="Custom Page echart"
+                action="action_custom_page_echart"
+                parent="menu_root_custom_page"
+                groups="base.group_user"
+                sequence="0"/>
     </data>
 </odoo>

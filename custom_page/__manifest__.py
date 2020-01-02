@@ -33,6 +33,7 @@
         'demo/demo.xml',
     ],
     'qweb': [
-        "static/src/xml/base.xml"
+        "static/src/xml/base.xml",
+        "static/src/xml/echart.xml"
     ],
 }
