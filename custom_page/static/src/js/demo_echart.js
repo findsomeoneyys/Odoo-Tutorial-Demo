@@ -4,6 +4,8 @@ odoo.define('custom_page.echart', function (require) {
     var AbstractAction = require('web.AbstractAction');
     var core = require('web.core');
     var ajax = require('web.ajax');
+    var framework = require('web.framework');
+    var Dialog = require('web.Dialog');
     
     var CustomPageEchart = AbstractAction.extend({
         template: 'custom_page.EchartPage',
@@ -74,6 +76,7 @@ odoo.define('custom_page.echart', function (require) {
 
         },
         on_btn1_click: function(event) {
+            framework.blockUI();
             console.log('on_btn1_click!');
             var self = this;
             return this._rpc({
@@ -85,6 +88,20 @@ odoo.define('custom_page.echart', function (require) {
                 self.echart_option.xAxis.data = data['x_data'];
                 self.echart_option.series[0].data = data['y_data'];
                 self.myChart.setOption(self.echart_option, true);
+                framework.unblockUI();
+                self.do_notify('请求成功!', '数据已更新!');
+
+                var dialog = new Dialog(self, {
+                    size: 'medium',
+                    title: '对话框',
+                    $content: '<p>这是一个对话框</p>',
+                    buttons: [
+                        {
+                            text: _t("Cancel"),
+                            close: true,
+                        },
+                    ],
+                }).open();
             });
         },
         render_ul: function() {
