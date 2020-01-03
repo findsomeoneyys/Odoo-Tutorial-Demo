@@ -6,7 +6,7 @@ odoo.define('custom_page.echart', function (require) {
     var ajax = require('web.ajax');
     
     var CustomPageEchart = AbstractAction.extend({
-        template: 'EchartPage',
+        template: 'custom_page.EchartPage',
         // 需要额外引入的css文件
         cssLibs: [
         ],
@@ -39,7 +39,7 @@ odoo.define('custom_page.echart', function (require) {
                     type: 'bar',
                     data: [5, 20, 36, 10, 10, 20]
                 }]
-            };
+            };            
         },
         // willStart是执行介于init和start中间的一个异步方法，一般会执行向后台请求数据的请求，并储存返回来的数据。
         // 其中ajax.loadLibs(this)会帮加载定义在cssLibs，jsLibs的js组件。
@@ -47,6 +47,15 @@ odoo.define('custom_page.echart', function (require) {
             var self = this;
             return $.when(ajax.loadLibs(this), this._super()).then(function() {
                 console.log("in action willStart!");
+                self._rpc({
+                    route: '/custom_page/data/',
+                    params: {},
+                }).done(function(result) {
+                    console.log('willStart load data finish!', result);
+                    self.dashboard_data = {};
+                    self.dashboard_data['x_data'] = result['x_data'];
+                    self.render_ul();
+                });
             });
         },
         // start方法会在渲染完template后执行，此时可以做任何需要处理的事情。
@@ -77,6 +86,11 @@ odoo.define('custom_page.echart', function (require) {
                 self.echart_option.series[0].data = data['y_data'];
                 self.myChart.setOption(self.echart_option, true);
             });
+        },
+        render_ul: function() {
+            var self = this;
+            var template = "custom_page.EchartPage2"
+            $('.container-fluid').append(core.qweb.render(template, {widget: self}));
         },
     });
     
