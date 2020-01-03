@@ -19,6 +19,7 @@ odoo.define('custom_page.echart', function (require) {
         // 事件绑定相关定义
         events: {
             'click #btn1': 'on_btn1_click',
+            'click #btn2': 'on_btn2_click',
         },
         // action的构造器，可以自行根据需求填入需要初始化的数据，比如获取context里的参数，根据条件判断初始化一些变量。
         init: function(parent, context) {
@@ -108,6 +109,15 @@ odoo.define('custom_page.echart', function (require) {
             var self = this;
             var template = "custom_page.EchartPage2"
             $('.container-fluid').append(core.qweb.render(template, {widget: self}));
+        },
+        on_btn2_click: function(event) {
+            var self = this;
+            self.do_action({
+                type: 'ir.actions.act_window',
+                res_model: 'res.users',
+                views: [[false, 'list'], [false, 'form']],
+                target: 'new'
+            });
         },
     });
     
